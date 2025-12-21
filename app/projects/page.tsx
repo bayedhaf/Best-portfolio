@@ -110,7 +110,7 @@ const demoBtn: React.CSSProperties = {
   cursor: "pointer",
 }
 
-// project list
+
 const projects: [string, string, number, number][] = [
   [
     "Agritech Platform – optimized farm management + IoT analytics.",
