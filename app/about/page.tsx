@@ -10,8 +10,8 @@ export default function AboutPage() {
       <Card
         className="
           flex 
-          flex-col              /* mobile default vertical */
-          md:flex-row           /* horizontal on medium screens */
+          flex-col             
+          md:flex-row           
           bg-slate-950 
           text-white 
           items-center 

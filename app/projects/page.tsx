@@ -1,4 +1,4 @@
-"use client" // <-- this needs to be the very first line in the file
+"use client" 
 
 import { motion, Variants } from "framer-motion"
 import Image from "next/image"
@@ -6,7 +6,8 @@ import React from "react"
 
 export default function ScrollTriggered() {
   return (
-    <div className="min-w-screen bg-slate-950 max-w-[1100px] mx-auto p-4 grid grid-cols-1 md:grid-cols-2 gap-10 place-items-center">
+    <div className="min-w-screen bg-slate-950 max-w-[1100px] mx-auto p-4 grid grid-cols-1 md:grid-cols-3 gap-10 place-items-center">
+      <div className=" text-amber-100">Project</div>
       {projects.map(([text, img, hueA, hueB], i) => (
         <Card key={i} text={text} image={img} hueA={hueA} hueB={hueB} />
       ))}
@@ -32,7 +33,7 @@ function Card({ text, image, hueA, hueB }: CardProps) {
       viewport={{ amount: 0.8 }}
       className="relative"
     >
-      {/* splash background */}
+     
       <div style={{ ...splash, background }} />
 
       <motion.div style={card} variants={cardVariants}>
@@ -40,8 +41,8 @@ function Card({ text, image, hueA, hueB }: CardProps) {
         <Image
           src={image}
           alt={text}
-          width={300}
-          height={200}
+          width={400}
+          height={300}
           className="object-cover"
         />
         <button style={demoBtn} className="mb-20 bg-slate-800">
