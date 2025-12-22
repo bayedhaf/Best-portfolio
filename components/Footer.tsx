@@ -1,11 +1,11 @@
 "use client"
 
-import React, { useState } from "react"
+import React from "react"
 import { Github, Linkedin, Facebook, Send, MailPlus, Phone } from "lucide-react"
 import Link from "next/link"
 
 export default function Footer() {
-  const [show, setShow] = useState(false)
+  
 
   const contacts = [
     { name: "Email", href: "mailto:bayedhaf2023@gmail.com", icon: <MailPlus /> },
@@ -26,29 +26,27 @@ export default function Footer() {
           </p>
         </div>
 
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Contact</h2>
-          <ul className="flex flex-cols-3 gap-4">
-     {contacts.map((c, i) => (
-    <li key={i}>
-      <Link
-        href={c.href}
-        className="group flex items-center gap-2 text-gray-300 hover:text-white transition"
-        target="_blank"
-      >
-        {c.icon}
-
-        <span
-          className="text-sm opacity-0 group-hover:opacity-100 transition"
+       <div className="px-1"> 
+  <h2 className="text-lg font-semibold mb-2">Contact</h2>
+  <ul className="grid grid-cols-3 gap-0.5"> 
+    {contacts.map((c, i) => (
+      <li key={i} className="flex flex-col items-center p-0.5"> 
+        <Link
+          href={c.href}
+          className="group flex flex-col items-center gap-0 text-gray-300 hover:text-white transition p-1 rounded hover:bg-gray-800/20" 
+          target="_blank"
         >
-          {c.name}
-        </span>
-      </Link>
-    </li>
-  ))}
-</ul>
-
-        </div>
+          <div className="text-xl p-1"> 
+            {c.icon}
+          </div>
+          <span className="text-xs opacity-0 group-hover:opacity-100 transition mt-0.5">
+            {c.name}
+          </span>
+        </Link>
+      </li>
+    ))}
+  </ul>
+</div>
 
         <div>
           <h2 className="text-lg font-semibold mb-2">Quick Links</h2>
