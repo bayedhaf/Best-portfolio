@@ -10,7 +10,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  // navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { useIsMobile } from "@/app/hooks/use-mobile"
 import Image from "next/image"
@@ -84,11 +83,11 @@ export default function NavigationMenuDemo() {
             Home
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-2 md:w-[420px] lg:w-[520px] lg:grid-cols-[.75fr_1fr]">
+            <ul className="grid gap-2 md:w-105 lg:w-130 lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
                   <Link
-                    className="bg-gradient-to-b from-gray-50 to-gray-200 dark:from-gray-800 dark:to-gray-900 h-full w-full rounded-lg p-6 flex flex-col justify-end transition-all hover:shadow-xl hover:scale-[1.02] border border-gray-200"
+                    className="bg-linear-to-b from-gray-50 to-gray-200 dark:from-gray-800 dark:to-gray-900 h-full w-full rounded-lg p-6 flex flex-col justify-end transition-all hover:shadow-xl hover:scale-[1.02] border border-gray-200"
                     href="/"
                   >
                     <div className="mb-2 text-lg font-semibold text-gray-800">
@@ -122,7 +121,7 @@ export default function NavigationMenuDemo() {
             About Me
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 sm:w-[400px] md:w-[520px] md:grid-cols-2 lg:w-[620px] p-4">
+            <ul className="grid gap-3 sm:w-100 md:w-130 md:grid-cols-2 lg:w-155 p-4">
               {components.map((component) => (
                 <ListItem
                   key={component.title}
@@ -142,7 +141,7 @@ export default function NavigationMenuDemo() {
     Projects
   </NavigationMenuTrigger>
   <NavigationMenuContent>
-    <ul className="grid gap-4 sm:w-[400px] md:w-[550px] lg:w-[720px] md:grid-cols-2 p-4">
+    <ul className="grid gap-4 sm:w-100 md:w-137.5 lg:w-180 md:grid-cols-2 p-4">
 
       {/* Project 1 */}
         {projects.map((items)=>(
@@ -203,7 +202,7 @@ export default function NavigationMenuDemo() {
             Contact
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 sm:w-[400px] md:w-[520px] lg:w-[650px] md:grid-cols-2 p-4">
+            <ul className="grid gap-3 sm:w-100 md:w-130 lg:w-162.5 md:grid-cols-2 p-4">
               {contacts.map((contact) => (
                 <li key={contact.name}>
                   <NavigationMenuLink asChild>
