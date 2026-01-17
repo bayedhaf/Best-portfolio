@@ -55,7 +55,7 @@ export default function AboutPage() {
             duration: 3,
             ease: "easeInOut",
             repeat: Infinity,
-            repeatDelay: 0.6,
+            repeatDelay:2,
           }}
           style={box}
           className="overflow-hidden"

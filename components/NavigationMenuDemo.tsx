@@ -2,6 +2,8 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
+import { motion } from "framer-motion"
 import { Linkedin, Github, Send, Phone, Facebook, MailPlus } from "lucide-react"
 import {
   NavigationMenu,
@@ -12,10 +14,25 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import { useIsMobile } from "@/app/hooks/use-mobile"
-import Image from "next/image"
 
-// PROJECT + SKILLS SECTIONS
-const components: { title: string; href: string; description: string }[] = [
+/* =========================
+   ANIMATION VARIANTS
+========================= */
+const fadeUp = {
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0 },
+}
+
+const stagger = {
+  show: {
+    transition: { staggerChildren: 0.07 },
+  },
+}
+
+/* =========================
+   DATA (UNCHANGED)
+========================= */
+const components = [
   {
     title: "Frontend Engineering",
     href: "/docs/primitives/alert-dialog",
@@ -54,7 +71,6 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ]
 
-// CONTACT SECTION
 const contacts = [
   { name: "Email : baye…", href: "mailto:bayedhaf2023@gmail.com", icon: <MailPlus className="text-blue-600" /> },
   { name: "Phone : +251…", href: "tel:+251916656489", icon: <Phone className="text-green-600" /> },
@@ -63,12 +79,13 @@ const contacts = [
   { name: "Telegram", href: "https://t.me/bayedhaf", icon: <Send className="text-cyan-700" /> },
   { name: "Facebook", href: "https://www.facebook.com/bayedhaf", icon: <Facebook className="text-blue-500" /> },
 ]
-const projects=[
-  {pro_id:'Agritech-et', img:'/farm.png' ,href:'' ,defin:' Complete shopping system with cart, authentication, and admin dashboard.'},
-    {pro_id:'ASTU ENPLOYER Mnagement system',img:'/admin-users.png' ,href:'/' ,defin:' Complete shopping system with cart, authentication, and admin dashboard.'},
-      {pro_id:'HostNet', href:'', img:'/hot.png' ,defin:'Complete shopping system with cart, authentication, and admin dashboard.'},
-        {pro_id:'Fiteness Track', href:'', img:'/marketplace.png' ,defin:' Complete shopping system with cart, authentication, and admin dashboard.'},
-]
+
+const projects = [
+    {pro_id:'Agritech-one', img:'/farm.png' ,href:'https://agritech-et.me' ,defin:' Complete shopping system with cart, authentication, and admin dashboard.'},
+    {pro_id:'ASTU ENPLOYER Mnagement system',img:'/dsh.png' ,href:'https://performance-evaluation-kappa.vercel.app/auth/login' ,defin:'The platform provides an Admin Panel for viewing organization-wide evaluation metrics...'},
+    {pro_id:'HostNet', href:'https://host-net.vercel.app/', img:'/hot.png' ,defin:'Complete shopping system with cart, authentication, and admin dashboard.'},
+    {pro_id:'Fiteness Track', href:'https://github.com/bayedhaf/Fitness-tracker-web-App', img:'/marketplae.png' ,defin:' Fitness track app to record progress and workouts.'},]
+
 
 export default function NavigationMenuDemo() {
   const isMobile = useIsMobile()
@@ -83,8 +100,13 @@ export default function NavigationMenuDemo() {
             Home
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-2 md:w-105 lg:w-130 lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
+            <motion.ul
+              initial="hidden"
+              animate="show"
+              variants={stagger}
+              className="grid gap-2 md:w-105 lg:w-130 lg:grid-cols-[.75fr_1fr]"
+            >
+              <motion.li variants={fadeUp} className="row-span-3">
                 <NavigationMenuLink asChild>
                   <Link
                     className="bg-linear-to-b from-gray-50 to-gray-200 dark:from-gray-800 dark:to-gray-900 h-full w-full rounded-lg p-6 flex flex-col justify-end transition-all hover:shadow-xl hover:scale-[1.02] border border-gray-200"
@@ -98,20 +120,16 @@ export default function NavigationMenuDemo() {
                     </p>
                   </Link>
                 </NavigationMenuLink>
-              </li>
+              </motion.li>
 
-              <ListItem href="/docs" title="Projects">
-                Featured client + portfolio work.
-              </ListItem>
-
-              <ListItem href="/docs/installation" title="Experience">
-                Full-stack development + API integration.
-              </ListItem>
-
-              <ListItem href="/docs/primitives/typography" title="Services">
-                Software, UI engineering and backend architecture.
-              </ListItem>
-            </ul>
+              {["Projects", "Experience", "Services"].map((t, i) => (
+                <motion.li key={t} variants={fadeUp}>
+                  <ListItem href="/docs" title={t}>
+                    Featured professional work and experience.
+                  </ListItem>
+                </motion.li>
+              ))}
+            </motion.ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
 
@@ -121,106 +139,96 @@ export default function NavigationMenuDemo() {
             About Me
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 sm:w-100 md:w-130 md:grid-cols-2 lg:w-155 p-4">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
+            <motion.ul
+              initial="hidden"
+              animate="show"
+              variants={stagger}
+              className="grid gap-3 sm:w-100 md:w-130 md:grid-cols-2 lg:w-155 p-4"
+            >
+              {components.map((c) => (
+                <motion.li key={c.title} variants={fadeUp}>
+                  <ListItem href={c.href} title={c.title}>
+                    {c.description}
+                  </ListItem>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        {/* DOCS */}
+        {/* PROJECTS */}
         <NavigationMenuItem>
-  <NavigationMenuTrigger className="font-semibold text-gray-700 hover:text-primary transition">
-    Projects
-  </NavigationMenuTrigger>
-  <NavigationMenuContent>
-    <ul className="grid gap-4 sm:w-100 md:w-137.5 lg:w-180 md:grid-cols-2 p-4">
-
-      {/* Project 1 */}
-        {projects.map((items)=>(
-           <li  key={items.pro_id} className="rounded-lg border bg-white p-3 shadow-sm hover:shadow-lg transition">
-        <Image
-          width={500}
-          height={500}
-          src={items.img}
-          alt="project preview"
-          className="w-full h-32 rounded-md object-cover"
-        />
-        <div className="mt-2 text-sm font-semibold">
-        {items.pro_id}
-        </div>
-        <p className="text-xs text-gray-600">
-         {items.defin}
-        </p>
-        <Link
-          href={items.href}
-          className="block mt-2 text-center text-sm font-medium bg-primary text-white rounded-md p-1 hover:bg-primary/80 transition"
-        >
-          See Demo
-        </Link>
-      </li>
-        ))
-
-        }
-        </ul>
-  </NavigationMenuContent>
-</NavigationMenuItem>
-
-
-        {/* SKILLS */}
-        <NavigationMenuItem className="hidden md:block">
           <NavigationMenuTrigger className="font-semibold text-gray-700 hover:text-primary transition">
-            Skills
+            Projects
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[320px] gap-4 p-4">
-              <li>
-                <NavigationMenuLink>
-                  <div className="font-medium">Core Stack</div>
-                  <ul className="text-sm text-gray-600 list-disc pl-5">
-                    <li>JavaScript / TypeScript</li>
-                    <li>React / Next.js</li>
-                    <li>Express / MongoDB</li>
-                    <li>REST APIs / JWT / Session auth</li>
-                  </ul>
-                </NavigationMenuLink>
-              </li>
-            </ul>
+            <motion.ul
+              initial="hidden"
+              animate="show"
+              variants={stagger}
+              className="grid gap-4 sm:w-100 md:w-137.5 lg:w-180 md:grid-cols-2 p-4"
+            >
+              {projects.map((p) => (
+                <motion.li
+                  key={p.pro_id}
+                  variants={fadeUp}
+                  whileHover={{ y: -6, scale: 1.03 }}
+                  transition={{ type: "spring", stiffness: 260 }}
+                  className="rounded-lg border bg-white p-3 shadow-sm hover:shadow-lg"
+                >
+                  <Image
+                    width={500}
+                    height={500}
+                    src={p.img}
+                    alt="project preview"
+                    className="w-full h-32 rounded-md object-cover"
+                  />
+                  <div className="mt-2 text-sm font-semibold">{p.pro_id}</div>
+                  <p className="text-xs text-gray-600">{p.defin}</p>
+                  <Link
+                    href={p.href}
+                    className="block mt-2 text-center text-sm font-medium bg-primary text-white rounded-md p-1 hover:bg-primary/80 transition"
+                  >
+                    See Demo
+                  </Link>
+                </motion.li>
+              ))}
+            </motion.ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        {/* CONTACT – responsive and attractive */}
-        <NavigationMenuItem className="">
+        {/* CONTACT */}
+        <NavigationMenuItem>
           <NavigationMenuTrigger className="font-semibold text-gray-700 hover:text-primary transition">
             Contact
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 sm:w-100 md:w-130 lg:w-162.5 md:grid-cols-2 p-4">
-              {contacts.map((contact) => (
-                <li key={contact.name}>
+            <motion.ul
+              initial="hidden"
+              animate="show"
+              variants={stagger}
+              className="grid gap-3 sm:w-100 md:w-130 lg:w-162.5 md:grid-cols-2 p-4"
+            >
+              {contacts.map((c) => (
+                <motion.li
+                  key={c.name}
+                  variants={fadeUp}
+                  whileHover={{ scale: 1.04 }}
+                >
                   <NavigationMenuLink asChild>
                     <Link
-                      href={contact.href}
-                      className="flex gap-3 items-center w-full rounded-lg border border-transparent px-4 py-2 transition-all bg-white hover:bg-gray-100 hover:border-primary shadow-sm"
+                      href={c.href}
+                      className="flex gap-3 items-center w-full rounded-lg border border-transparent px-4 py-2 bg-white hover:bg-gray-100 hover:border-primary shadow-sm transition-all"
                     >
-                      <span className="text-xl">
-                        {contact.icon}
-                      </span>
+                      <span className="text-xl">{c.icon}</span>
                       <span className="text-sm font-medium text-gray-700">
-                        {contact.name}
+                        {c.name}
                       </span>
                     </Link>
                   </NavigationMenuLink>
-                </li>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
 
@@ -229,7 +237,9 @@ export default function NavigationMenuDemo() {
   )
 }
 
-// REUSABLE NAV ITEM
+/* =========================
+   REUSABLE ITEM (UNCHANGED)
+========================= */
 function ListItem({
   title,
   children,
