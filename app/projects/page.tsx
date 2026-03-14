@@ -6,70 +6,69 @@ import Link from "next/link"
 import React from "react"
 
 /* =========================
-   MAIN COMPONENT
+MAIN COMPONENT
 ========================= */
 export default function ScrollTriggered() {
   return (
-    <div className="min-h-screen bg-slate-950 px-4 py-16">
-      <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 place-items-center">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-black px-6 py-20">
 
-        {/* ===== Animated Intro Text ===== */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 place-items-center">
+
         <SectionIntro />
 
-        {/* ===== Cards ===== */}
-        {projects.map(([text, img, hueA, hueB, link_url], i) => (
+        {projects.map(([text, img, hueA, hueB, link], i) => (
           <Card
             key={i}
             text={text}
             image={img}
             hueA={hueA}
             hueB={hueB}
-            link_url={link_url}
+            link_url={link}
           />
         ))}
+
       </div>
+
     </div>
   )
 }
 
 /* =========================
-   INTRO SECTION
+INTRO SECTION
 ========================= */
 function SectionIntro() {
   return (
+
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: .9 }}
       viewport={{ once: true }}
       className="md:col-span-3 text-center max-w-3xl"
     >
+
       <motion.h1
-        initial={{ letterSpacing: "0.5em", opacity: 0 }}
-        animate={{ letterSpacing: "0.08em", opacity: 1 }}
+        initial={{ opacity: 0, letterSpacing: "0.4em" }}
+        animate={{ opacity: 1, letterSpacing: "0.08em" }}
         transition={{ duration: 1 }}
-        className="text-3xl md:text-4xl font-extrabold text-amber-200 mb-6"
+        className="text-4xl md:text-5xl font-bold text-white mb-6"
       >
-        Project Showcase
+        Featured Projects
       </motion.h1>
 
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4, duration: 0.8 }}
-        className="text-slate-300 text-base md:text-lg leading-relaxed"
-      >
-        The cards below present interactive prototypes that demonstrate modern
-        UI design, core functionality, and key system features. Each project
-        includes a live demo or direct access to its GitHub repository.
-      </motion.p>
+      <p className="text-slate-400 text-lg leading-relaxed">
+        A curated collection of modern applications demonstrating full-stack
+        engineering, AI integrations, and scalable user interfaces.
+      </p>
+
     </motion.div>
   )
 }
 
 /* =========================
-   CARD COMPONENT
+CARD COMPONENT
 ========================= */
+
 interface CardProps {
   text: string
   image: string
@@ -79,139 +78,161 @@ interface CardProps {
 }
 
 function Card({ text, image, hueA, hueB, link_url }: CardProps) {
-  const background = `linear-gradient(306deg, ${h(hueA)}, ${h(hueB)})`
+
+  const background = `linear-gradient(135deg, ${h(hueA)}, ${h(hueB)})`
 
   return (
+
     <motion.div
       style={cardContainer}
       initial="offscreen"
       whileInView="onscreen"
-      viewport={{ amount: 0.6, once: true }}
-      className="relative"
+      viewport={{ once: true, amount: .5 }}
+      className="group relative"
     >
-      <div style={{ ...splash, background }} />
+
+      {/* gradient glow */}
+      <div
+        style={{ ...glow, background }}
+        className="opacity-50 group-hover:opacity-80 transition"
+      />
 
       <motion.div
         style={card}
         variants={cardVariants}
-        whileHover={{ scale: 1.04, rotate: 0 }}
+        whileHover={{ y: -10, rotate: 0, scale: 1.03 }}
         transition={{ type: "spring", stiffness: 200 }}
       >
-        <p style={textStyle}>{text}</p>
 
         <Image
           src={image}
           alt={text}
           width={400}
           height={260}
-          className="rounded-lg object-cover"
+          className="rounded-xl object-cover h-40 w-full transition duration-500 group-hover:scale-110"
         />
 
+        <p style={textStyle}>
+          {text}
+        </p>
+
         <Link href={link_url} target="_blank">
-          <button style={demoBtn}>
-            See Demo
+
+          <button className="mt-3 px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-500 transition shadow-lg">
+            View Demo
           </button>
+
         </Link>
+
       </motion.div>
+
     </motion.div>
+
   )
 }
 
 /* =========================
-   ANIMATIONS
+ANIMATIONS
 ========================= */
+
 const cardVariants: Variants = {
-  offscreen: { y: 200, opacity: 0 },
+
+  offscreen: {
+    y: 120,
+    opacity: 0,
+  },
+
   onscreen: {
     y: 0,
     opacity: 1,
-    rotate: -6,
+    rotate: -5,
     transition: {
       type: "spring",
       bounce: 0.35,
       duration: 0.8,
     },
   },
+
 }
 
-const h = (h: number) => `hsl(${h}, 100%, 50%)`
+const h = (h: number) => `hsl(${h}, 80%, 55%)`
 
 /* =========================
-   STYLES
+STYLES
 ========================= */
+
 const cardContainer: React.CSSProperties = {
-  overflow: "hidden",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  position: "relative",
 }
 
-const splash: React.CSSProperties = {
+const glow: React.CSSProperties = {
   position: "absolute",
-  inset: 0,
-  clipPath: `path("M 0 303.5 C 0 292.454 8.995 285.101 20 283.5 L 460 219.5 C 470.085 218.033 480 228.454 480 239.5 L 500 430 C 500 441.046 491.046 450 480 450 L 20 450 C 8.954 450 0 441.046 0 430 Z")`,
+  inset: "-20px",
+  filter: "blur(60px)",
+  borderRadius: 30,
 }
 
 const card: React.CSSProperties = {
   width: 300,
-  height: 430,
-  background: "#ffffff",
+  height: 380,
+  background: "rgba(255,255,255,0.95)",
   borderRadius: 20,
   padding: 20,
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
   textAlign: "center",
-  boxShadow: "0 40px 90px rgba(0,0,0,.25)",
+  boxShadow: "0 40px 80px rgba(0,0,0,.35)",
+  backdropFilter: "blur(8px)",
 }
 
 const textStyle: React.CSSProperties = {
   fontSize: 14,
   color: "#1f2937",
   fontWeight: 500,
-  lineHeight: 1.5,
-}
-
-const demoBtn: React.CSSProperties = {
-  padding: "10px 16px",
-  background: "#0f172a",
-  color: "#fff",
-  borderRadius: 12,
-  border: "none",
-  cursor: "pointer",
-  fontWeight: 600,
+  lineHeight: 1.6,
+  marginTop: 10,
 }
 
 /* =========================
-   DATA
+PROJECT DATA
 ========================= */
+
 const projects: [string, string, number, number, string][] = [
+
   [
-    "Agritech Platform – optimized farm management with IoT analytics.",
+    "Agritech-ET — AI platform connecting farmers with agricultural insights.",
     "/farm.png",
-    340,
-    10,
+    200,
+    260,
     "https://agritech-et.me",
   ],
+
   [
-    "Hostnate – property hosting platform connecting workers and employers.",
+    "HostNet — modern hosting platform for connecting property owners and clients.",
     "/hot.png",
-    0,
-    60,
+    10,
+    50,
     "https://host-net.vercel.app/",
   ],
+
   [
-    "Employee Performance Evaluation System (ASTU).",
+    "Employee Performance Evaluation System used for ASTU staff assessment.",
     "/dsh.png",
-    60,
-    90,
+    40,
+    80,
     "https://performance-evaluation-kappa.vercel.app/auth/login",
   ],
+
   [
-    "Fitness tracking application with wearable device integration.",
+    "Fitness tracker application for recording workouts and monitoring progress.",
     "/marketplac.png",
-    220,
-    290,
+    260,
+    320,
     "https://github.com/bayedhaf/Fitness-tracker-web-App",
   ],
+
 ]
